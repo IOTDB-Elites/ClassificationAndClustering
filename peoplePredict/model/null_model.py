@@ -1,3 +1,4 @@
+# just a example of model
 class NullModel:
     def __init__(self):
         self.res = 0

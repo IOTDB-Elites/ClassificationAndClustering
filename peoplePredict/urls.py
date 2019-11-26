@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from peoplePredict.view import hello
+from peoplePredict.view import model_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('example/', hello.hello),
+    path('example/', model_view.predict),
 ]
