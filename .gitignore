@@ -1,3 +1,8 @@
 peoplePredict/__pycache__
 peoplePredict/model/__pycache__
 peoplePredict/view/__pycache__
+.idea
+classification/__pycache__
+classification/my_classifier/__pycache__
+classification/my_classifier/nodes/__pycache__
+classification/validation/__pycache__
