@@ -47,11 +47,14 @@ def preprocess_data(work_dir=''):
     x = np.array(X)
     y = np.array(Y)
     per = np.random.permutation(x.shape[0])
-
+    min_max_scaler = preprocessing.MinMaxScaler()
+    x = min_max_scaler.fit_transform(x)
     np.savez(work_dir + "train_set_preprocess", x=x[per], y=y[per])
 
     pca = PCA(n_components=4)
     x_pca = pca.fit_transform(x[per])
+    min_max_scaler = preprocessing.MinMaxScaler()
+    x_pca = min_max_scaler.fit_transform(x_pca)
     np.savez(work_dir + "train_set_pca", x=x_pca, y=y[per])
     return x[per], y[per], x_pca, y[per]
 

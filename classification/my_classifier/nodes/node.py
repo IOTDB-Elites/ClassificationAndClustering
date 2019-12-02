@@ -80,5 +80,5 @@ class LogicalLoss(Node):
         next_backward = 1 if self.next is None else self.next.backward()[self.next_backward_loc]
         predict_backward = next_backward * ((-self.n2.forward()) * (1 / self.n1.forward())
                                             + (1 - self.n2.forward()) * (1 / (1 - self.n1.forward())))
-        # label_backward = next_backward * (- np.log2(self.n1.forward()) + np.log2(1 - self.n1.forward()))
-        self.backward_value = [predict_backward, 1]
+        label_backward = next_backward * (- np.log2(self.n1.forward()) + np.log2(1 - self.n1.forward()))
+        self.backward_value = [predict_backward, label_backward]

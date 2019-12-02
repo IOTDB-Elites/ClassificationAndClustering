@@ -26,8 +26,6 @@ def k_ford_validation(x, y, model):
 def precision(out, y):
     TP = 0
     FP = 0
-    print(out)
-    print(y)
     for i in range(out.shape[0]):
         if out[i] == 1 and y[i] == 1:
             TP += 1
