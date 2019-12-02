@@ -46,17 +46,49 @@ def preprocess_data(work_dir=''):
 
     x = np.array(X)
     y = np.array(Y)
-    per = np.random.permutation(x.shape[0])
+    x, y = build_balance_data(x, y)
+    # 归一化
     min_max_scaler = preprocessing.MinMaxScaler()
     x = min_max_scaler.fit_transform(x)
-    np.savez(work_dir + "train_set_preprocess", x=x[per], y=y[per])
+    np.savez(work_dir + "train_set_preprocess", x=x, y=y)
 
-    pca = PCA(n_components=4)
-    x_pca = pca.fit_transform(x[per])
+    pca = PCA(n_components=28)
+    x_pca = pca.fit_transform(x)
+    # 归一化
     min_max_scaler = preprocessing.MinMaxScaler()
     x_pca = min_max_scaler.fit_transform(x_pca)
-    np.savez(work_dir + "train_set_pca", x=x_pca, y=y[per])
-    return x[per], y[per], x_pca, y[per]
+
+    np.savez(work_dir + "train_set_pca", x=x_pca, y=y)
+    return x, y, x_pca, y
+
+
+def build_balance_data(x, y):
+    data_x = []
+    data_y = []
+    count1 = 0
+    count0 = 0
+    for i in range(y.shape[0]):
+        if y[i] == 1:
+            data_x.append(x[i])
+            data_y.append(1)
+            count1 += 1
+
+    for i in range(y.shape[0]):
+        if y[i] == 0:
+            data_x.append(x[i])
+            data_y.append(0)
+            count0 += 1
+            if count0 >= count1:
+                break
+
+    data_x = np.array(data_x)
+    data_y = np.array(data_y)
+    per = np.random.permutation(data_x.shape[0])
+
+    data_x = data_x[per]
+    data_y = data_y[per]
+
+    return data_x, data_y
 
 
 def load_train_data(work_dir=''):
@@ -78,6 +110,7 @@ def load_train_data_pca(work_dir=''):
 
 
 if __name__ == '__main__':
-    x, y = load_train_data_pca()
-    x1 = load_train_data()[0]
-    print(x.shape, x1.shape)
+    preprocess_data()
+    # x, y = load_train_data_pca()
+    # x1 = load_train_data()[0]
+    # print(x.shape, x1.shape)
