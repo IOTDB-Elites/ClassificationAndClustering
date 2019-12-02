@@ -3,10 +3,11 @@ import pandas as pd
 import numpy as np
 from sklearn.decomposition import PCA
 import os
+from sklearn import preprocessing
 
 
-def preprocess_data():
-    train = pd.read_csv('train_set.csv')
+def preprocess_data(work_dir=''):
+    train = pd.read_csv(work_dir + 'train_set.csv')
     jobs, maritals, educations, contacts = [], [], [], []
     for i in range(train.ID.size):
         if not jobs.__contains__(train.job.get(i)):
@@ -46,30 +47,31 @@ def preprocess_data():
     x = np.array(X)
     y = np.array(Y)
     per = np.random.permutation(x.shape[0])
-    np.savez("train_set_preprocess", x=x[per], y=y[per])
+
+    np.savez(work_dir + "train_set_preprocess", x=x[per], y=y[per])
 
     pca = PCA(n_components=4)
     x_pca = pca.fit_transform(x[per])
-    np.savez("train_set_pca", x=x_pca, y=y[per])
+    np.savez(work_dir + "train_set_pca", x=x_pca, y=y[per])
     return x[per], y[per], x_pca, y[per]
 
 
-def load_train_data():
-    if os.path.exists("train_set_preprocess" + ".npz"):
-        zip_file = np.load("train_set_preprocess" + ".npz")
+def load_train_data(work_dir=''):
+    if os.path.exists(work_dir + "train_set_preprocess" + ".npz"):
+        zip_file = np.load(work_dir + "train_set_preprocess" + ".npz")
         return zip_file['x'], zip_file['y']
 
     print("Can not find dump data, build from csv, please wait...")
-    return preprocess_data()[:2]
+    return preprocess_data(work_dir)[:2]
 
 
-def load_train_data_pca():
-    if os.path.exists("train_set_pca" + ".npz"):
-        zip_file = np.load("train_set_pca" + ".npz")
+def load_train_data_pca(work_dir=''):
+    if os.path.exists(work_dir + "train_set_pca" + ".npz"):
+        zip_file = np.load(work_dir + "train_set_pca" + ".npz")
         return zip_file['x'], zip_file['y']
 
     print("Can not find dump data, build from csv, please wait...")
-    return preprocess_data()[2:]
+    return preprocess_data(work_dir)[2:]
 
 
 if __name__ == '__main__':

@@ -6,3 +6,5 @@ classification/__pycache__
 classification/my_classifier/__pycache__
 classification/my_classifier/nodes/__pycache__
 classification/validation/__pycache__
+classification/preprocess/__pycache__
+*.npz

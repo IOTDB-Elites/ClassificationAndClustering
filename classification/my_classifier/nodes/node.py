@@ -46,11 +46,19 @@ class Sigmoid(Node):
         n1.next_backward_loc = 0
 
     def cal_forward(self):
-        self.forward_value = 1 / (1 + np.exp(- self.n1.forward()))
+        before_value = self.n1.forward()
+        positive_part = before_value * (before_value >= 0)
+        negative_part = before_value * (before_value < 0)
+        positive_res = 1 / (1 + np.exp(- positive_part))
+        positive_res = positive_res * (before_value >= 0)
+        negative_res = np.exp(negative_part) / (1 + np.exp(negative_part))
+        negative_res = negative_res * (before_value < 0)
+
+        self.forward_value = positive_res + negative_res
 
     def cal_backward(self):
         next_backward = 1 if self.next is None else self.next.backward()[self.next_backward_loc]
-        sigmoid = 1 / (1 + np.exp(- self.n1.forward()))
+        sigmoid = self.forward()
         self.backward_value = [next_backward * sigmoid * (1 - sigmoid)]
 
 
@@ -72,5 +80,5 @@ class LogicalLoss(Node):
         next_backward = 1 if self.next is None else self.next.backward()[self.next_backward_loc]
         predict_backward = next_backward * ((-self.n2.forward()) * (1 / self.n1.forward())
                                             + (1 - self.n2.forward()) * (1 / (1 - self.n1.forward())))
-        label_backward = next_backward * (- np.log2(self.n1.forward()) + np.log2(1 - self.n1.forward()))
-        self.backward_value = [predict_backward, label_backward]
+        # label_backward = next_backward * (- np.log2(self.n1.forward()) + np.log2(1 - self.n1.forward()))
+        self.backward_value = [predict_backward, 1]

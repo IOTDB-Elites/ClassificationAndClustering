@@ -5,7 +5,7 @@ from classification.my_classifier.nodes.base_node import Value
 
 
 class LogisticRegression:
-    def __init__(self, learning_rate=0.01, step=100):
+    def __init__(self, learning_rate=0.01, step=200):
         self.step = step
         self.learning_rate = learning_rate
         self.x_holder = Value(None)
@@ -25,9 +25,8 @@ class LogisticRegression:
             self.y_holder.val = y.reshape(y.shape[0], 1)
         else:
             self.y_holder.val = y
-        self.a_holder.val = np.random.randn(x.shape[1], 1)
-        self.b_holder.val = np.random.randn(1, 1)
-        self.loss.forward()
+        self.a_holder.val = np.random.randn(x.shape[1], 1) * 0.0001
+        self.b_holder.val = np.random.randn(1, 1) * 0.0001
 
         for i in range(self.step):
             self.a_holder.train(self.learning_rate)
@@ -38,6 +37,6 @@ class LogisticRegression:
 
     def predict(self, x):
         self.x_holder.val = x
-        res = self.out.forward() > 0.5
+        res = np.ones(x.shape[0]) * (self.out.forward() > 0.5).reshape(x.shape[0])
         self.out.clear()
         return res
