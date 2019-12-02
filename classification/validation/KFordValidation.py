@@ -17,10 +17,12 @@ def k_ford_validation(x, y, model):
         score = score.reshape((score.shape[0]))
 
         out = score != test_y
+        print("----------------")
         print("accuracy: ", 1 - (np.sum(out) / test_x.shape[0]))
         print("precision: ", precision(score, test_y))
         print("recall: ", recall(score, test_y))
         print("f1: ", f1(score, test_y))
+        print("----------------")
 
 
 def precision(out, y):

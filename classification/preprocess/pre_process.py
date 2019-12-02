@@ -68,18 +68,19 @@ def build_balance_data(x, y):
     count1 = 0
     count0 = 0
     for i in range(y.shape[0]):
-        if y[i] == 1:
-            data_x.append(x[i])
-            data_y.append(1)
-            count1 += 1
-
-    for i in range(y.shape[0]):
         if y[i] == 0:
             data_x.append(x[i])
             data_y.append(0)
             count0 += 1
-            if count0 >= count1:
-                break
+
+    while count1 < count0:
+        for i in range(y.shape[0]):
+            if y[i] == 1:
+                data_x.append(x[i])
+                data_y.append(1)
+                count1 += 1
+                if count1 >= count0:
+                    break
 
     data_x = np.array(data_x)
     data_y = np.array(data_y)
@@ -110,7 +111,8 @@ def load_train_data_pca(work_dir=''):
 
 
 if __name__ == '__main__':
-    preprocess_data()
+    x, y, x_pca, y = preprocess_data()
+    print(x.shape, x_pca.shape)
     # x, y = load_train_data_pca()
     # x1 = load_train_data()[0]
     # print(x.shape, x1.shape)
