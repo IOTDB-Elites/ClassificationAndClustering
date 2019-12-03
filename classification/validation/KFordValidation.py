@@ -9,6 +9,8 @@ def k_ford_validation(x, y, model):
         raise AttributeError("model doesn't have predict method")
 
     kf = KFold(n_splits=5, random_state=0)
+    accuracy, precision_res, recall_res, f1_res = 0.0, 0.0, 0.0, 0.0
+
     for train_index, test_index in kf.split(x):
         train_x, train_y = x[train_index], y[train_index]
         test_x, test_y = x[test_index], y[test_index]
@@ -17,12 +19,17 @@ def k_ford_validation(x, y, model):
         score = score.reshape((score.shape[0]))
 
         out = score != test_y
-        print("----------------")
-        print("accuracy: ", 1 - (np.sum(out) / test_x.shape[0]))
-        print("precision: ", precision(score, test_y))
-        print("recall: ", recall(score, test_y))
-        print("f1: ", f1(score, test_y))
-        print("----------------")
+        accuracy += 1 - (np.sum(out) / test_x.shape[0])
+        precision_res += precision(score, test_y)
+        recall_res += recall(score, test_y)
+        f1_res += f1(score, test_y)
+
+    print("----------------")
+    print("accuracy: ", accuracy / 5)
+    print("precision: ", precision_res / 5)
+    print("recall: ", recall_res / 5)
+    print("f1: ", f1_res / 5)
+    print("----------------")
 
 
 def precision(out, y):
