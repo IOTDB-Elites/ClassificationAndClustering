@@ -15,7 +15,7 @@ def load_data():
     """
     :return: (原始的问卷数据Q1-Q28，未预先分割直接用pca做的结果，预先分割成3类后用pca做的结果)
     """
-    data = np.loadtxt("data.csv", dtype=np.float, delimiter=",", skiprows=1)
+    data = np.loadtxt("/Users/jackietien/Documents/ClassificationAndClustering/clustering/preprocess/data.csv", dtype=np.float, delimiter=",", skiprows=1)
 
     data = preprocess(data)
 
