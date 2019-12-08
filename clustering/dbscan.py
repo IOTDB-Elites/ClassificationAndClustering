@@ -28,7 +28,7 @@ def get_sub_list(full_list, indexes):
 if __name__ == '__main__':
     data = np.loadtxt("data.csv", dtype=np.float, delimiter=",", skiprows=1)
 
-    data1 = data[:, 5:]
+    # data1 = data[:, 5:]
     pca = PCA(n_components=2)
     data = pca.fit_transform(data)
 
