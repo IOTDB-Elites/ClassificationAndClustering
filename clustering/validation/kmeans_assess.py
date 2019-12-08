@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from clustering.preprocess.pre_process import load_data
 
 
-data_all, data_pca, data_respectively_pca = load_data()
+data_all, data_pca, data_respectively_pca = load_data('/Users/jackietien/Documents/ClassificationAndClustering/clustering/preprocess/data.csv')
 
 lib_SSE = []
 # 轮廓系数
