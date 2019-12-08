@@ -66,5 +66,8 @@ for data_name, data in (('data_all', data_all), ('data_pca', data_pca), ('data_r
     plt.xlabel('K')
     plt.ylabel('SSE')
 
-    plt.savefig(data_name + "-SSE.png")
+    plt.savefig(data_name + '-SSE.png')
+    plt.close()
+
+
 
