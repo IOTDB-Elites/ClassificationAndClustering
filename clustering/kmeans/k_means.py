@@ -37,18 +37,7 @@ def sse(data, centroids, label):
     return np.sum(SSE)
 
 
-def preprocess(data):
-    """
-    将数据所有维度都归一化至0-1之间，避免不同维度的量纲对聚类的影响
-    """
-    d_min, d_max = np.min(data, axis=0), np.max(data, axis=0)
-    data = (data - d_min) / (d_max - d_min)
-    return data
-
-
-def k_means(data, k=2, need_preprocess=True):
-    if need_preprocess:
-        data = preprocess(data)
+def k_means(data, k=2):
     n = data.shape[0]
     centroids = rand_center(data, k)
     label = np.zeros(n, dtype=np.int)
