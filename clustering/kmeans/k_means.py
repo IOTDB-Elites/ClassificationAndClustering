@@ -37,14 +37,16 @@ def sse(data, centroids, label):
     return np.sum(SSE)
 
 
-def k_means(data, k=2):
+def k_means(data, k=2, max_iter=300):
     n = data.shape[0]
     centroids = rand_center(data, k)
     label = np.zeros(n, dtype=np.int)
 
     finished = False
 
-    while not finished:
+    count = 0
+    while (not finished) and count < max_iter:
+        count += 1
         old_centroids = np.copy(centroids)
         for i in range(n):
             min_dist, min_index = np.inf, -1
@@ -55,7 +57,9 @@ def k_means(data, k=2):
                     label[i] = j
 
         for i in range(k):
-            centroids[i] = np.mean(data[label == i], axis=0)
+            k_cluster = data[label == i]
+            if len(k_cluster) != 0:
+                centroids[i] = np.mean(k_cluster, axis=0)
         finished = converged(old_centroids, centroids)
 
     return centroids, label, sse(data, centroids, label)
