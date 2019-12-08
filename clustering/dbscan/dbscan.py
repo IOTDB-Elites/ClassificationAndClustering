@@ -30,9 +30,6 @@ def get_sub_list(full_list, indexes):
 if __name__ == '__main__':
     full_data, data_pca, data_respectively_pca = pre_process.load_data("../preprocess/data.csv")
 
-    print(data_respectively_pca)
-    print(data_respectively_pca.shape)
-
     db = DBSCAN(eps=0.1, min_samples=20).fit(data_respectively_pca)
     labels = db.labels_
 
