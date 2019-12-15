@@ -13,19 +13,19 @@ raw_data, data_all, data_pca, data_respectively_pca = load_data('/Users/jackieti
 data = data_respectively_pca
 k = 6
 start_time = time.time()
-# estimator = KMeans(n_clusters=k).fit(data)
-_, label, sse = k_means.k_means(data, k)
+estimator = KMeans(n_clusters=k).fit(data)
+# _, label, sse = k_means.k_means(data, k)
 end_time = time.time()
 consuming_time = end_time - start_time
 print(consuming_time)
 # cluster_centers = estimator.cluster_centers_
 #
-# label = estimator.labels_
-# sse = estimator.inertia_
-# silhouette = silhouette_score(data, label)
-# calinski_harabasz = calinski_harabasz_score(data, label)
-# print("lib result: \t", " k: ", k, "\tsse: ", sse, "\tsilhouette: ", silhouette, "\tcalinski_harabaz_score: ", calinski_harabasz)
-
+label = estimator.labels_
+sse = estimator.inertia_
+silhouette = silhouette_score(data, label)
+calinski_harabasz = calinski_harabasz_score(data, label)
+print("lib result: \t", " k: ", k, "\tsse: ", sse, "\tsilhouette: ", silhouette, "\tcalinski_harabaz_score: ", calinski_harabasz)
+#
 # for i in range(k):
 #     cluster_k = raw_data[label == i]
 #     a = {}
