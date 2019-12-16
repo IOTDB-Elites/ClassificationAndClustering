@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from clustering.preprocess.pre_process import load_data
 
 
-data_all, data_pca, data_respectively_pca = load_data()
+raw_data, data_all, data_pca, data_respectively_pca = load_data('/Users/jackietien/Documents/ClassificationAndClustering/clustering/preprocess/data.csv')
 
 lib_SSE = []
 # 轮廓系数
@@ -66,5 +66,9 @@ for data_name, data in (('data_all', data_all), ('data_pca', data_pca), ('data_r
     plt.xlabel('K')
     plt.ylabel('SSE')
 
-    plt.savefig(data_name + "-SSE.png")
+    plt.savefig(data_name + '-SSE.png')
+    plt.close()
+
+
+
 

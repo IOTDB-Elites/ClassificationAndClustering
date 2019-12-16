@@ -28,9 +28,9 @@ def get_sub_list(full_list, indexes):
 
 
 if __name__ == '__main__':
-    full_data, data_pca, data_respectively_pca = pre_process.load_data("../preprocess/data.csv")
+    raw_data, full_data, data_pca, data_respectively_pca = pre_process.load_data("../preprocess/data.csv")
 
-    db = DBSCAN(eps=0.1, min_samples=20).fit(data_respectively_pca)
+    db = DBSCAN(eps=0.75, min_samples=20).fit(data_respectively_pca)
     labels = db.labels_
 
     grouped = group(labels)

@@ -2,22 +2,11 @@ from sklearn.decomposition import PCA
 import numpy as np
 
 
-def preprocess(sample_data):
-    """
-    将数据所有维度都归一化至0-1之间，避免不同维度的量纲对聚类的影响
-    """
-    d_min, d_max = np.min(sample_data, axis=0), np.max(sample_data, axis=0)
-    sample_data = (sample_data - d_min) / (d_max - d_min)
-    return sample_data
-
-
 def load_data(data_path):
     """
-    :return: (原始的问卷数据Q1-Q28，未预先分割直接用pca做的结果，预先分割成3类后用pca做的结果)
+    :return: (所有的原始数据，原始的问卷数据Q1-Q28，未预先分割直接用pca做的结果，预先分割成3类后用pca做的结果)
     """
     data = np.loadtxt(data_path, dtype=np.float, delimiter=",", skiprows=1)
-
-    data = preprocess(data)
 
     pca = PCA(n_components=1)
 
@@ -34,4 +23,4 @@ def load_data(data_path):
 
     data_pca = PCA(n_components=3).fit_transform(data[:, 5:])
 
-    return data[5:], data_pca, data_respectively_pca
+    return data, data[5:], data_pca, data_respectively_pca

@@ -8,9 +8,9 @@ from sklearn.neighbors import NearestNeighbors
 
 from clustering.preprocess.pre_process import load_data
 
-data_all, data_pca, data_respectively_pca = load_data("../preprocess/data.csv")
+raw_data, data_all, data_pca, data_respectively_pca = load_data("../preprocess/data.csv")
 
-data = data_respectively_pca
+data = data_all
 
 lib_SSE = []
 # 轮廓系数
@@ -39,28 +39,28 @@ ns = 4
 nbrs = NearestNeighbors(n_neighbors=ns, radius=0).fit(data)
 distances, indices = nbrs.kneighbors(data)
 
-print(distances)
-print(indices)
+# print(distances)
+# print(indices)
 plt.tick_params(labelsize=15)
 distanceDec = sorted(distances[:, ns - 1], reverse=False)
 plt.plot(distanceDec)
 plt.xlabel('Points Sorted According to Distance of 4th Nearest Neighbor', size=15)
 plt.ylabel('4th Nearest Neighbor Distance', size=15)
 # plt.show()
-plt.savefig('decide_eps.png')
+# plt.savefig('decide_eps.png')
 
-eps = 1
-min_samples = 4
+eps = 0.75
+min_samples = 20
 start_time = time.time()
 estimator = DBSCAN(eps=eps, min_samples=min_samples).fit(data)
-# end_time = time.time()
-# consuming_time = end_time - start_time
+end_time = time.time()
+consuming_time = end_time - start_time
 label = estimator.labels_
 # sse = estimator.inertia_
 silhouette = silhouette_score(data, label)
 
 calinski_harabasz = calinski_harabasz_score(data, label)
-print("\teps: ", eps, "\tmin_samples", min_samples, "\tsilhouette: ", silhouette, "\tcalinski_harabaz_score: ",
+print("\ttime:",consuming_time, "\teps: ", eps, "\tmin_samples", min_samples, "\tsilhouette: ", silhouette, "\tcalinski_harabaz_score: ",
       calinski_harabasz)
 
 #
