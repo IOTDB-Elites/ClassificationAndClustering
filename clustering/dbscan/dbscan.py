@@ -6,15 +6,15 @@ from clustering.preprocess import pre_process
 from mpl_toolkits.mplot3d import axes3d, Axes3D
 
 def group(full_list):
-    num = max(full_list) + 2
+    num = max(full_list) + 1
     print(num)
     res = []
     for i in range(0, num):
         res.append([])
     for i in range(0, full_list.shape[0]):
         if full_list[i] == -1:
-            res[len(res) - 1].append(i)
-            # continue;
+            # res[len(res) - 1].append(i)
+            continue
         else:
             res[full_list[i]].append(i)
     return res
