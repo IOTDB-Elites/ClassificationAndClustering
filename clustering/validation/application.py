@@ -30,14 +30,14 @@ for i in range(k):
     cluster_k = raw_data[label == i]
     a = {}
     for j in range(len(cluster_k)):
-        key = cluster_k[j][1]
+        key = cluster_k[j][0]
         if key in a:
             a[key] += 1
         else:
             a[key] = 1
-    for class_num in range(1, 14):
+    for class_num in range(1, 3):
         if class_num in a:
-            a[class_num] = a[class_num] / len(raw_data[raw_data[:, 1] == class_num])
+            a[class_num] = a[class_num] / len(raw_data[raw_data[:, 0] == class_num])
 
     items = sorted(a.items(), key=lambda x: x[1], reverse=True)
 
